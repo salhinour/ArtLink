@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>EventUp - Event and Conference Template</title>
+    <title>ArtLink</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css" >
@@ -56,18 +56,18 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#gallery">
-                  Gallery
+                <a class="nav-link" href="Forums">
+                  Forums
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pricing">
-                  pricing
+                <a class="nav-link" href="Musicians.php">
+                Musicians
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#sponsors">
-                  Sponsors
+                <a class="nav-link" href="Reservation.php">
+                Reservation
                 </a>
               </li>
               <li class="nav-item">
@@ -1255,7 +1255,7 @@
                   <div class="row">
                     <div class="col-md-6 form-line">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="name" name="email" placeholder="First Name" required data-error="Please enter your name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="First Name" required data-error="Please enter your name">
                         <div class="help-block with-errors"></div>
                       </div>
                     </div>
@@ -1403,3 +1403,4 @@
     <script src="../../assets/js/main.js"></script>      
   </body>
 </html>
+
