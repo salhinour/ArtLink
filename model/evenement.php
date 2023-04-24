@@ -8,17 +8,18 @@ class Evenement{
     private $image;           
     private $localisaton;
     private $capciter;
+    private $idType;
 
-
-        public function __construct($IDevent=null, $dateevent,$titre,$description,$localisaton,$capciter)
+        public function __construct($IDevent=null, $dateevent,$titre,$description,$localisaton,$capciter,$image,$idType)
         {
             $this->idevent=$IDevent;
             $this->dateevent=$dateevent;
             $this->titre=$titre;
             $this->description=$description;
-            // $this->image=$image;
             $this->localisaton=$localisaton;
             $this->capciter=$capciter;
+            $this->image=$image;
+            $this->idType=$idType;
 
 
         }
@@ -26,6 +27,10 @@ class Evenement{
       
 
 //Getters
+public function getIdType(){
+    return $this->idType;
+}
+
         public function getIDevent(){
             return $this->idevent;
         }
@@ -47,11 +52,16 @@ class Evenement{
         public function getcapciter(){
             return $this->capciter;
         }
+        
 
 //Setters
 
 public function setdateevent($dateevent){
      $this->dateevent=$dateevent;
+}
+
+public function setIdType($idType){
+    $this->idType=$idType;
 }
 public function settitre($titre){
     $this->titre=$titre;

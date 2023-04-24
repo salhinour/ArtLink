@@ -198,8 +198,9 @@ $list = $evenementc->listevenement();
   <?php 
       foreach($list as $client){
       ?>
+
 		<div class="profile">
-			<img src="photo/img1.jpg"> 
+			<img src='photo/<?php echo $client['image']?>'> 
 			<h2><?php echo $client['titre']?> </h2>
 			<a href="Description.php?id=<?php echo $client['idevent'] ?>" ><button class="button">Savoir encore</button></a>
       

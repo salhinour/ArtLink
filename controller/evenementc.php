@@ -30,7 +30,7 @@ class EvenementC{
     }
     function addevenement($evenement)
     {
-        $sql="INSERT into evenement VALUES (NULL,:dd,:ti,:disc,:loca,:cap)";
+        $sql="INSERT into evenement VALUES (NULL,:dd,:ti,:disc,:loca,:cap,:img,:idType)";
         $db=config::getConnexion();
         try{
             $query=$db->prepare($sql);
@@ -38,9 +38,11 @@ class EvenementC{
                 'dd'=>$evenement->getdateevent()->format('Y/m/d'),
                 'ti'=>$evenement->gettitre(),
                 'disc'=>$evenement->getdescription(),
-                // 'img'=>$evenement->getimage(),
                 'loca'=>$evenement->getlocalisaton(),
-                'cap'=>$evenement->getcapciter()
+                'cap'=>$evenement->getcapciter(),
+                'img'=>$evenement->getimage(),
+                'idType'=>$evenement->getIdType()
+
             ]);
               } catch (Exception $e){
                 die('Erreur' . $e->getMessage());
@@ -71,7 +73,8 @@ class EvenementC{
                     titre = :titre, 
                     description = :description, 
                     localisation = :localisation,
-                    capaciter=:capaciter
+                    capaciter=:capaciter,
+                    image= :image
                 WHERE idevent= :id '
             );
             $query->execute([
@@ -80,7 +83,8 @@ class EvenementC{
                 'titre' => $evenement->gettitre(),
                 'description' => $evenement->getdescription(),
                 'localisation' => $evenement->getlocalisaton(),
-                'capaciter' => $evenement->getcapciter()
+                'capaciter' => $evenement->getcapciter(),
+                'image' => $evenement->getimage(),
 
             ]);
             echo $query->rowCount() . " records UPDATED successfully <br>";

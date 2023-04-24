@@ -1,7 +1,12 @@
 <?php
 include '../../controller/evenementc.php';
+include '../../controller/typeevenementc.php';
+$typeC = new TypeevenementC();
+
 $evenementc = new EvenementC();
 $list = $evenementc->showEvenement($_GET['id']); 
+$typeEvent = $typeC->showtype($list['idtype']);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +34,7 @@ $list = $evenementc->showEvenement($_GET['id']);
   <style>
     body {
       background-color: #000;
-      color: #fff;
+      color: #000  ;
       font-family: "Merriweather", serif;
       padding-top: 150px;
     }
@@ -151,14 +156,44 @@ $list = $evenementc->showEvenement($_GET['id']);
     <script src="../../assets/js/video.js"></script>
     <script src="../../assets/js/main.js"></script>      
   </body>
-  <div class="evenement">
-    <h1><?php echo $list['titre']?></h1>
-    <b><?php echo $list['description']?></b><br>
-    <b><?php echo $list['dateevent']?></b><br>
-    <b><?php echo $list['localisation']?></b><br>
-    <b>capaciter: <?php echo $list['capaciter']?> personnes</b><br>
+
+
+  <section id="about" class="section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-xs-12">
+            <div class="img-thumb">
+              <img class="img-fluid" src='photo/<?php echo $list['image']?>' alt="">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12 col-xs-12">
+            <div class="about-content">
+              <div>
+                <div class="about-text">  
+                  <h2><?php echo $list['titre']?></h2>
+                  <p><?php echo $list['description']?></p>
+
+                    
+
+                </div>
+                <ul class="stylish-list mb-3">
+                  <li><i class="lni-check-mark-circle"></i><?php echo $list['dateevent']?></li>
+                  <li><i class="lni-check-mark-circle"></i><?php echo $list['localisation']?></li>
+                  <li><i class="lni-check-mark-circle"></i>capaciter: <?php echo $list['capaciter']?> personnes</li>
+                  <li><i class="lni-check-mark-circle"></i> Type : <?php echo $typeEvent['typeevent']?></li>
+
+                </ul>
+
+
+                <a class="btn btn-common" href="evenement.php">Retourner</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
     
-    <a href="evenement.php"><button class="button">Retourner</button></a>
-  </div>
+
 </body>
 </html>
