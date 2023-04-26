@@ -1,9 +1,8 @@
 <?php
-include_once '../../config.php';
-
-class ReclamationC{ 
+include '../../config.php';
+class ReponseC{ 
   public function listClients(){
-    $sql="SELECT * from reclamations";
+    $sql="SELECT * from reponse";
     $pdo=config::getConnexion();
     try{
        $list = $pdo->query($sql);//executer la valeur eli mawjouda fel sql
@@ -14,7 +13,7 @@ class ReclamationC{
   }
   public function afficher()
   {
-    $sql="SELECT * from reclamations";
+    $sql="SELECT * from reponse";
     $db=config::getConnexion();
     try{
       $list=$db->query($sql);
@@ -23,29 +22,30 @@ class ReclamationC{
       die('Erreur' . $e->getMessage());
   }
 }
-public function delete($idrec)
+public function delete($idrep)
 {
-  $sql="DELETE from reclamations where IdReclamation=:idrec";
+  $sql="DELETE from reponse where IdReponse=:idrep";
   $db=config::getConnexion();
   $query=$db->prepare($sql);
-  $query->bindValue(':idrec',$idrec);
+  $query->bindValue(':idrep',$idrep);
   try{
     $query->execute();
   }catch (Exception $e){
     die('Erreur' . $e->getMessage());
 }
 }
-public function ajouterRec($reclamations)
+public function ajouterRep($reponse)
 {
-  $sql="INSERT into reclamations values(Null,:d,:o,:m,:e) ";
+  $sql="INSERT into reponse values(Null,:d,:r,:idrec) ";
   $db=config::getConnexion();
   try{
     $query=$db->prepare($sql);
     $query->execute([
-    'd'=>$reclamations->getdate()->format('Y/m/d'),
-    'o'=>$reclamations->getobjet(),
-    'm'=>$reclamations->getmessage(),
-    'e'=>$reclamations->getetat(),]);
+    'd'=>$reponse->getdate()->format('Y/m/d'),
+    'r'=>$reponse->getreponse(),
+    'idrec'=>$reponse->getidrec(),
+
+  ]);
   } catch (Exception $e){
     die('Erreur' . $e->getMessage());
 }
@@ -76,41 +76,36 @@ public function ajouterRec($reclamations)
   }
 }*/
 
-public function modifierreclamation($reclamations, $idrec)
+public function modifierreponse($reponse,$idrep)
     {
         try {
             $db = config::getConnexion();
             $query = $db->prepare(
-                'UPDATE reclamations SET 
-                     DateRec = :datee,
-                     ObjetRec = :objet,  
-                     MessageRec= :messagee, 
-                     EtatRec = :etat
-                WHERE IdReclamation= :idrec'
+                'UPDATE reponse SET 
+                     DateRep = :datee, 
+                     ReponseRec= :reponsee
+                WHERE IdReponse= :idrep'
             );
             $query->execute([
-                'idrec' => $idrec,
-                'datee' => $reclamations->getdate()->format('Y/m/d'),
-                'objet' => $reclamations->getobjet(),
-                'messagee' =>$reclamations->getmessage(),
-                'etat' => $reclamations->getetat()
-                
+                'idrep' => $idrep,
+                'datee' => $reponse->getdate()->format('Y/m/d'),
+                'reponsee' =>$reponse->getreponse()
             ]);
             echo $query->rowCount() . " records UPDATED successfully <br>";
-            } catch (PDOException $e) {
+        } catch (PDOException $e) {
            echo $e->getMessage(); 
         }
     }
 
  public function showClient($id)
     {
-        $sql = "SELECT * from reclamations where IdReclamation=$id";
+        $sql = "SELECT * from reponse where IdReponse=$id";
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
             $query->execute();
-            $reclamations = $query->fetch();
-            return $reclamations;
+            $reponse = $query->fetch();
+            return $reponse;
         } catch (Exception $e) {
             die('Error: ' . $e->getMessage());
         }

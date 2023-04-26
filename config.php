@@ -1,5 +1,4 @@
 <?php
-
 class config
 {
     private static $pdo = null;
@@ -9,7 +8,7 @@ class config
         if (!isset(self::$pdo)) {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=localhost;dbname=artlink',
+                    'mysql:host=localhost;dbname=artlinkk',
                     'root',
                     '',
                     [

@@ -3,15 +3,11 @@ include '../../controller/ReclamationC.php';
 include '../../model/Reclamation.php';
 
 if(isset($_POST['subject']) && isset($_POST['message'])) {
-  $reclamation=new Reclamation(NULL ,$_POST['subject'],new DateTime("2222/11/03"),$_POST['message'],1);
-
-
+  $reclamation=new Reclamation(NULL ,$_POST['subject'],new DateTime("2222/11/03"),$_POST['message'],'NON TRAITE');
 
   $reclamationsC=new ReclamationC;
   $reclamationsC->ajouterRec($reclamation);
 } //champ exist  (empty :champ non vide)
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,23 +131,26 @@ if(isset($_POST['subject']) && isset($_POST['message'])) {
               <div class="form-wrapper">
 
 
-                <form role="form" action='' method="post" id="contactForm" name="contact-form" data-toggle="validator">
+              <form method="post" action="#" name="reclamation" >
                   <div class="row">
                     
                     <div class="col-md-12 form-line">
                       <div class="form-group">
-                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required data-error="Please enter your message subject">
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" >
+                        <p style="color: red" id="subjectEr"></p>
                         <div class="help-block with-errors"></div>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
-                        <textarea class="form-control" rows="4" id="message" name="message" required data-error="Write your message"></textarea>
+                        <textarea class="form-control" rows="4" id="message" name="message" ></textarea>
+                        <p style="color: red" id="messageEr"></p>
                       </div>
                       <div class="form-submit">
-                        <input type="submit" class="btn btn-common" id="form-submit" value="ajouter" onclick="verif()">
+                        <input type="submit" class="btn btn-common" id="form-submit" value="ajouter" >
                         <div id="msgSubmit" class="h3 text-center hidden"></div>
-                        <script src="reclamation.js"></script>
+
+                        <p id='erreur'></p>
                       </div>
                     </div>
                   </div>
@@ -232,6 +231,57 @@ if(isset($_POST['subject']) && isset($_POST['message'])) {
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+var letters = /^[A-Za-z]+$/;
+
+var subject = document.getElementById('subject');
+
+document.forms["reclamation"].addEventListener("submit", function (e) {
+
+    console.log(subject);
+    var inputs = document.forms["reclamation"];
+
+   
+
+    let errors = false;
+
+    //Traitement cas par cas
+    if (subject.value.length< 3) {
+        errors = false;     
+        document.getElementById("subjectEr").innerHTML =
+            "Le nom doit compter au minimum 3 caractères.";
+    } else if (!subject.value.match(letters)) {
+        errors = false;
+        document.getElementById("subjectEr").innerHTML =
+            "Veuillez entrer un nom valid ! (seulement des lettres)";
+    } else {
+        errors = true;
+    }
+   
+
+   
+       
+
+    //Traitement générique
+    for (var i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value) {
+            errors = false;
+            document.getElementById("erreur").innerHTML =
+                "Veuillez renseigner tous les champs";
+        }
+    }
+
+    if (errors === false) {
+        e.preventDefault();
+    } else {
+        alert("formulaire envoyé");
+    }
+});
+
+
+    
+
+    </script>
     <script src="../../assets/js/jquery-min.js"></script>
     <script src="../../assets/js/popper.min.js"></script>
     <script src="../../assets/js/bootstrap.min.js"></script>
