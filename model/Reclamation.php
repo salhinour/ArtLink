@@ -6,14 +6,16 @@ class Reclamation{
     private  DateTime $daterec;
     private $messagerec;
     private $etatrec;
+    private $rating;
 
-    public function __construct($idrec=null,$objetrec,$daterec,$messagerec,$etatrec)
+    public function __construct($idrec=null,$objetrec,$daterec,$messagerec,$etatrec,$rating)
 {
     $this->idrec=$idrec;
     $this->objetrec=$objetrec;
     $this->daterec=$daterec;
     $this->messagerec=$messagerec;
     $this->etatrec=$etatrec;
+    $this->rating=$rating;
     
 }
 public function getidrec(){
@@ -45,6 +47,12 @@ public function setetat($etatrec){
  }
  public function setidrec($idrec){
     $this->idrec=$idrec;
+ }
+ public function getrating(){
+    return $this->rating;
+}
+public function setrating($rating){
+    $this->rating=$rating;
  }
 }
 ?>

@@ -37,7 +37,7 @@ public function delete($idrec)
 }
 public function ajouterRec($reclamations)
 {
-  $sql="INSERT into reclamations values(Null,:d,:o,:m,:e) ";
+  $sql="INSERT into reclamations values(Null,:o,:d,:m,:e,:r) ";
   $db=config::getConnexion();
   try{
     $query=$db->prepare($sql);
@@ -45,7 +45,9 @@ public function ajouterRec($reclamations)
     'd'=>$reclamations->getdate()->format('Y/m/d'),
     'o'=>$reclamations->getobjet(),
     'm'=>$reclamations->getmessage(),
-    'e'=>$reclamations->getetat(),]);
+    'e'=>$reclamations->getetat(),
+    'r'=>$reclamations->getrating(),
+  ]);
   } catch (Exception $e){
     die('Erreur' . $e->getMessage());
 }
@@ -82,16 +84,18 @@ public function modifierreclamation($reclamations, $idrec)
             $db = config::getConnexion();
             $query = $db->prepare(
                 'UPDATE reclamations SET 
+                  ObjetRec = :objet,
                      DateRec = :datee,
-                     ObjetRec = :objet,  
+                     
                      MessageRec= :messagee, 
                      EtatRec = :etat
                 WHERE IdReclamation= :idrec'
             );
             $query->execute([
                 'idrec' => $idrec,
-                'datee' => $reclamations->getdate()->format('Y/m/d'),
                 'objet' => $reclamations->getobjet(),
+                'datee' => $reclamations->getdate()->format('Y/m/d'),
+                
                 'messagee' =>$reclamations->getmessage(),
                 'etat' => $reclamations->getetat()
                 
@@ -116,6 +120,30 @@ public function modifierreclamation($reclamations, $idrec)
         }
     }
 
+
+public function getTotalDechetsCount()
+    {
+        $pdo = config::getConnexion();
+
+        $query = "SELECT COUNT(*) as total FROM reclamations";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total'];
+    }
+
+    public function listPaginatedDechets($offset, $limit)
+    {
+        $pdo = config::getConnexion();
+
+        $query = "SELECT * FROM reclamations LIMIT $offset, $limit";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
 }
 
 ?>
