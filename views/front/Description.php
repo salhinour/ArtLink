@@ -8,10 +8,18 @@ $list = $evenementc->showEvenement($_GET['id']);
 $typeEvent = $typeC->showtype($list['idtype']);
 
 ?>
-
+  
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
   <!-- Required meta tags -->
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -154,7 +162,8 @@ $typeEvent = $typeC->showtype($list['idtype']);
     <script src="../../assets/js/wow.js"></script>
     <script src="../../assets/js/nivo-lightbox.js"></script>
     <script src="../../assets/js/video.js"></script>
-    <script src="../../assets/js/main.js"></script>      
+    <script src="../../assets/js/main.js"></script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>     
   </body>
 
 
@@ -183,9 +192,68 @@ $typeEvent = $typeC->showtype($list['idtype']);
                   <li><i class="lni-check-mark-circle"></i> Type : <?php echo $typeEvent['typeevent']?></li>
 
                 </ul>
+                <br>
+<style>
+.rating {
+  display: inline-block;
+}
 
+.rating input[type="radio"] {
+  display: none;
+}
 
+.rating label {
+  color: #ddd;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.rating label:before {
+  content: "\2605";
+  margin-right: 5px;
+}
+
+.rating input[type="radio"]:checked ~ label {
+  color: #FFC107;
+}
+</style>
+                <!DOCTYPE html>
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1LEkQvJ3H63s_dk5yjia6MkOnwRbNNpU&ehbc=2E312F" width="640" height="480"></iframe>
                 <a class="btn btn-common" href="evenement.php">Retourner</a>
+                
+
+                <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events:[{title:"<?php echo $list['titre']?>",start:"<?php echo $list['dateevent']?>"}]
+        });
+        calendar.render();
+      });
+
+    </script>
+    <div id='calendar'></div>
+</body>
+</html>
+
+  
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
               </div>
             </div>
           </div>

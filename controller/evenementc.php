@@ -15,6 +15,19 @@ class EvenementC{
         }
 
     }
+    public static  function listevenement2($where_clause){
+        $sql="SELECT * from evenement where idtype='$where_clause'";
+        $pdo= config::getConnexion();
+        try{
+
+            $list=$pdo->query($sql);
+            return $list;
+
+        }catch(Exception $e){
+            die('Erreur'. $e->getMessage());
+        }
+
+    }
     function deleteevenement($id){
         $sql="DELETE from evenement where idevent= :id";
         $db=config::getConnexion();

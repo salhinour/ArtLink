@@ -206,8 +206,7 @@ $list = $evenementc->listevenement();
       
 		</div>
     <?php } ?>
-    </div>
-		
+    
 	
     
   </body>
