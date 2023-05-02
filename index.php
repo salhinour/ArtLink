@@ -56,18 +56,18 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#gallery">
-                  Gallery
+                <a class="nav-link" href="Forums">
+                  Forums
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#pricing">
-                  pricing
+                <a class="nav-link" href="Musicians.php">
+                Musicians
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="musicienv.php">
-                  Musiciens
+                <a class="nav-link" href="Reservation.php">
+                Reservation
                 </a>
               </li>
               <li class="nav-item">
