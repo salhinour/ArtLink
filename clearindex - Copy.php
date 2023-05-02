@@ -1,22 +1,30 @@
-<?php
-require_once 'C:\xampp\htdocs\ArtLink\controller\musicienC.php';
-require_once 'C:\xampp\htdocs\ArtLink\model\Musician.php';
-require_once 'C:\xampp\htdocs\ArtLink\controller\categorieC.php';
-
-if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  && isset($_POST['prix']) && isset($_POST['image']) && isset($_POST['categorie'])) {
-    $cat= new categorieC();
-    $id= $cat->getbynom($_POST['categorie']);
-    $musician = new musician($_POST['nom'], $_POST['prenom'], $_POST['desc'], $_POST['prix'], $_POST['image'],$id);
-    $musicianc = new musicianC();
-    $musicianc->addmusician($musician);
-    header("Location: tablemusiciens.php");
-}
+<?php session_start()
+include 'C:\xampp\htdocs\ArtLink\controller\categorieC.php';
+include 'C:\xampp\htdocs\ArtLink\model\Categorie.php';
 
 ?>
 <!DOCTYPE html>
 <html>
+<style>
+.return-btn {
+      background-color: green;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
+</style>   
+    
+    
+
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ArtLink</title>
     <meta name="description" content="">
@@ -40,52 +48,9 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-	<title>Modifier</title>
-	<meta charset="utf-8">
-	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
-	<style>
-		body {
-			font-family: 'Merriweather', serif;
-			background-color: #222;
-			color: #fff;
-			padding-top: 50px;
-			text-align: center;
-		}
-		label {
-			display: inline-block;
-			margin-bottom: 5px;
-			margin-top: 20px;
-			font-size: 24px;
-			width: 200px;
-			text-align: right;
-			padding-right: 10px;
-		}
-		input[type="text"], input[type="number"], input[type="file"] {
-			padding: 10px;
-			margin-bottom: 10px;
-			font-size: 18px;
-			border: none;
-			border-radius: 5px;
-			background-color: #fff;
-			color: #222;
-		}
-		input[type="submit"] {
-			padding: 10px;
-			font-size: 18px;
-			border: none;
-			border-radius: 5px;
-			background-color: #4CAF50;
-			color: #fff;
-			cursor: pointer;
-		}
-		input[type="submit"]:hover {
-			background-color: #3e8e41;
-		}
-	</style>
-
 </head>
+
 <body>
-	
 <?php include_once 'include/header.php'; ?>
     <div class="d-flex align-items-stretch">
         <!-- Sidebar Navigation-->
@@ -104,7 +69,7 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
                 <li>
                     <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Informations </a>
                     <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="ajoutc.php">Ajouter une catégorie</a></li>
+                        <li><a href="formType.php">Ajouter une catégorie</a></li>
                         <li><a href="ajout.php">Ajouter un musicien</a></li>
                         <li><a href="ajouter_carte.php">Ajouter un évenement </a></li>
 
@@ -112,7 +77,7 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
                 <li>
                     <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Tables</a>
                     <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="tablecategories.php">Categories</a></li>
+                        <li><a href="themes.php">Categories</a></li>
                         <li><a href="tablemusiciens.php">Musiciens</a></li>
                         <li><a href="afficher_client.php">Réservations</a></li>
                         <li><a href="afficher_carte.php">Forums</a></li>
@@ -125,43 +90,26 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
             <div class="page-header">
                 <div class="container-fluid">
                     <h2 class="h5 no-margin-bottom">Tableau de bord</h2>
-					<section class="no-padding-top no-padding-bottom">
-					<h1>Ajouter un musicien</h1>
-                    <?php
-                    $categorie = new categorieC();
-                    $categories = $categorie->listcategories();
-                    ?>
-                    <form method="post" action="" enctype="multipart/form-data" onsubmit="return validateForm();">
-	<label>Last name:</label>
-	<input type="text" id="last_name" name="nom"  required><br>
-
-	<label for="first_name">First name:</label>
-	<input type="text" id="first_name" name="prenom" onkeyup="nameValidation()" required><br>
-
-	<label for="description">Description:</label>
-	<input type="text" id="description" name="desc" required><br>
-
-	<label for="image">Image:</label>
-	<input type="text" id="image" name="image" required><br>
-
-	<label for="prix">Prix:</label>
-	<input type="number" id="prix" name="prix" step="10" required><br>
-
-	<label for="categorie">Categorie:</label>
-<select id="categorie" name="categorie" required style="width: 250px;" style="height: 100px;" >
-  <?php
-    $categorie = new categorieC();
-    $categories = $categorie->listcategories();
-    foreach ($categories as $category) {
-      echo '<option value="'.$category['nom_categorie'].'">'.$category['nom_categorie'].'</option>';
-    }
-  ?>
-</select><br>
-
-
-	<input type="submit" value="Submit">
-</form>
-            		</section>
+                    <section>
+                    <table border="1 ">
+        <?php 
+        $categorie = new categorieC();
+        $categories = $categorie->listcategories();
+        foreach ($categories as $categorie): ?>
+            <tr>
+                <td>
+                  <?php echo $categorie['nom_categorie']; ?>
+                </td>
+                <td>
+                  <a href="supprimerc.php?id=<?php echo $categorie['id_categorie']; ?>">Delete</a>
+                </td>
+                <td>
+                  <a href="modifierc.php?id=<?php echo $categorie['id_categorie']; ?>">Modify</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </table>
+                    </section>
                 </div>
             </div>
             
@@ -187,52 +135,6 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
     <script src="Assets/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="Assets/js/charts-home.js"></script>
     <script src="Assets/js/front.js"></script>
-    <script>
-		function validateForm() {
-			// Validate first name and last name
-			var firstName = document.getElementById("first_name").value;
-			var lastName = document.getElementById("last_name").value;
-
-			if (firstName.length <= 2 || firstName.length > 30) {
-				alert("First name should be between 3 and 30 characters long.");
-				return false;
-			}
-
-			if (lastName.length <= 2 || lastName.length > 30) {
-				alert("Last name should be between 3 and 30 characters long.");
-				return false;
-			}
-
-			// Validate image label
-			var imageLabel = document.getElementById("image").value;
-/*
-			if (!imageLabel.includes("\\")) {
-				alert("Image label should include at least one '\' character.");
-				return false;
-			}*/
-            
-            var letters = /^[A-Za-z]+$/;
-            if (!lastName.match(letters))
-            {
-                alert("Last name should contain only characters");
-				return false;   
-            }
-
-            if (!firstName.match(letters))
-            {
-                alert("First name should contain only characters");
-				return false;   
-            }
-			return true;
-		}
-        function validname()
-        {
-            var firstName = document.getElementById("first_name").value;
-            if (firstName.length < 3) {
-        lNameError = " Le nom doit compter au minimum 3 caractères.";
-        document.getElementById("first_name").innerHTML = lNameError;
-        }
-        }
-	</script>
 </body>
+
 </html>

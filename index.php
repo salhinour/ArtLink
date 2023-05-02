@@ -24,7 +24,7 @@
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="Assets/css/custom.css">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="Assets/img/mostache.png">
+   <!-- <link rel="shortcut icon" href="Assets/img/mostache.png">-->
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -38,10 +38,11 @@
         <nav id="sidebar">
             <!-- Sidebar Header-->
             <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"> <img src="Assets/img/logo; ?>" alt="..." class="img-fluid rounded-circle" ></div>
-                <div class="title">
+               <!-- <div class="avatar"> <img src="Assets/img/logo; ?>" alt="..." class="img-fluid rounded-circle" ></div> -->
+               <a href="index.html" class="navbar-brand mt-2"><img src="../../assets/img/logo.png"  height="120px" alt=""></a> 
+               <!--<div class="title">
                     <h1>ARTLINK<h1>
-                </div>
+                </div>-->
             </div>
             <!-- Sidebar Navidation Menus--><span class="heading">Menu Principal</span>
             <ul class="list-unstyled">
@@ -53,16 +54,16 @@
                 <li>
                     <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Informations </a>
                     <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="formType.php">Ajouter une catégorie</a></li>
-                        <li><a href="ajouterP.php">Ajouter un musicien</a></li>
+                        <li><a href="ajoutc.php">Ajouter une categorie</a></li>
+                        <li><a href="ajout.php">Ajouter un musicien</a></li>
                         <li><a href="ajouter_carte.php">Ajouter un évenement </a></li>
-                        <
+
                 </li>
                 <li>
                     <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Tables</a>
                     <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="themes.php">Categories</a></li>
-                        <li><a href="produit.php">Musiciens</a></li>
+                        <li><a href="tablecategories.php">Categories</a></li>
+                        <li><a href="tablemusiciens.php">Musiciens</a></li>
                         <li><a href="afficher_client.php">Réservations</a></li>
                         <li><a href="afficher_carte.php">Forums</a></li>
                         <li><a href="tables_inf.php">Evenements</a></li>

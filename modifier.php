@@ -1,10 +1,12 @@
 <?php
 require_once 'C:\xampp\htdocs\ArtLink\controller\musicienC.php';
 require_once 'C:\xampp\htdocs\ArtLink\model\Musician.php';
-
+require_once 'C:\xampp\htdocs\ArtLink\controller\categorieC.php';
 
 if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  && isset($_POST['prix']) && isset($_POST['image']) && isset($_POST['categorie'])) {
-    $musician = new musician($_POST['nom'], $_POST['prenom'], $_POST['desc'], $_POST['prix'], $_POST['image'], $_POST['categorie']);
+    $cat= new categorieC();
+    $id= $cat->getbynom($_POST['categorie']);
+    $musician = new musician($_POST['nom'], $_POST['prenom'], $_POST['desc'], $_POST['prix'], $_POST['image'],$id);
     $musicianc = new musicianC();
     $musicianc->updatemusician($musician,$_GET['id']);
     header("Location: tablemusiciens.php");
@@ -125,6 +127,10 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
                     <h2 class="h5 no-margin-bottom">Tableau de bord</h2>
 					<section class="no-padding-top no-padding-bottom">
 					<h1>Modifier un musicien</h1>
+                    <?php
+                    $categorie = new categorieC();
+                    $categories = $categorie->listcategories();
+                    ?>
 	<form method="post" action="" enctype="multipart/form-data" onsubmit="return validateForm();">
 		
     <?php 
@@ -146,7 +152,20 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
 		<input type="number" id="prix" name="prix" step="0.01" required value=<?php echo $musician2['prix']; ?> ><br>
 
         <label for="categorie">Categorie:</label>
-		<input type="text" id="categorie" name="categorie" required value=<?php echo $musician2['categorie']; ?> ><br>
+<select id="categorie" name="categorie" required style="width: 250px;" style="height: 100px;" >
+  <?php
+   $categorie = new categorieC();
+   $categories = $categorie->listcategories();
+   foreach ($categories as $categorie) {
+     $selected = '';
+     if ($categorie['id_categorie'] == $musician2['id_categorie']) {
+       $selected = 'selected';
+     }
+     echo '<option value="'.$categorie['nom_categorie'].'" '.$selected.'>'.$categorie['nom_categorie'].'</option>';
+   }
+ ?>
+  
+</select><br>
 
 		<input type="submit" value="Submit">
 	</form>
@@ -193,11 +212,11 @@ if(isset($_POST['prenom']) && isset($_POST['nom'])  && isset($_POST['desc'])  &&
 			}
 
 			// Validate image label
-			var imageLabel = document.getElementById("image").value;
-			if (!imageLabel.includes("/")) {
-				alert("Image label should include at least one '/' character.");
+			/*var imageLabel = document.getElementById("image").value;
+			if (!imageLabel.includes("\\")) {
+				alert("Image label should include at least one '\' character.");
 				return false;
-			}
+			}*/
             
             var letters = /^[A-Za-z]+$/;
             if (!lastName.match(letters))
